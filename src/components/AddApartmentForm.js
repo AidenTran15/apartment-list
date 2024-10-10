@@ -27,50 +27,22 @@ const AddApartmentForm = () => {
     }));
   };
 
-// Function to handle array fields like Images, Videos, Pros, Cons
+  const handleArrayChange = (e, type) => {
+    const items = e.target.value.split('\n');
 
-const handleArrayChange = (e, type) => {
-  // Directly split the input by commas without trimming
-  const items = e.target.value.split(',');
-
-  setForm((prevForm) => ({
-    ...prevForm,
-    [type]: items,
-  }));
-};
-
-
-  const formatImageUrls = (imageSegments) => {
-    const completeUrls = [];
-    let currentUrl = '';
-
-    imageSegments.forEach((segment) => {
-      if (segment.startsWith('https://')) {
-        if (currentUrl) {
-          completeUrls.push(currentUrl);
-        }
-        currentUrl = segment;
-      } else {
-        currentUrl += `,${segment}`;
-      }
-    });
-
-    if (currentUrl) {
-      completeUrls.push(currentUrl);
-    }
-
-    return completeUrls;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [type]: items,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const cleanedImages = form.Images.filter((url) => url.includes('https://'));
-
       const payload = {
         ApartmentID: form.ApartmentID,
         Name: form.Name,
-        Images: cleanedImages,
+        Images: form.Images.filter((url) => url.startsWith('https://')),
         Videos: form.Videos,
         Price: form.Price,
         Bedrooms: parseInt(form.Bedrooms) || 0,
@@ -115,12 +87,20 @@ const handleArrayChange = (e, type) => {
         </label>
         <label className="section-title">Media Information</label>
         <label>
-          Image URLs (comma separated):
-          <input type="text" value={form.Images.join(', ')} onChange={(e) => handleArrayChange(e, 'Images')} placeholder="https://image1, https://image2" />
+          Image URLs (one per line):
+          <textarea
+            value={form.Images.join('\n')}
+            onChange={(e) => handleArrayChange(e, 'Images')}
+            placeholder="https://image1\nhttps://image2"
+          />
         </label>
         <label>
-          Video URLs (comma separated):
-          <input type="text" value={form.Videos.join(', ')} onChange={(e) => handleArrayChange(e, 'Videos')} placeholder="https://video1, https://video2" />
+          Video URLs (one per line):
+          <textarea
+            value={form.Videos.join('\n')}
+            onChange={(e) => handleArrayChange(e, 'Videos')}
+            placeholder="https://video1\nhttps://video2"
+          />
         </label>
         <label className="section-title">Property Details</label>
         <label>
@@ -146,12 +126,20 @@ const handleArrayChange = (e, type) => {
         </label>
         <label className="section-title">Pros and Cons</label>
         <label>
-          Pros (comma separated):
-          <input type="text" value={form.Pros.join(', ')} onChange={(e) => handleArrayChange(e, 'Pros')} placeholder="Spacious, Near park" />
+          Pros (one per line):
+          <textarea
+            value={form.Pros.join('\n')}
+            onChange={(e) => handleArrayChange(e, 'Pros')}
+            placeholder="Spacious\nNear park"
+          />
         </label>
         <label>
-          Cons (comma separated):
-          <input type="text" value={form.Cons.join(', ')} onChange={(e) => handleArrayChange(e, 'Cons')} placeholder="Noisy, Expensive" />
+          Cons (one per line):
+          <textarea
+            value={form.Cons.join('\n')}
+            onChange={(e) => handleArrayChange(e, 'Cons')}
+            placeholder="Noisy\nExpensive"
+          />
         </label>
         <label>
           URL:
