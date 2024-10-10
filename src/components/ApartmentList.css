@@ -1,0 +1,29 @@
+.apartment-list {
+    padding: 20px;
+  }
+  
+  .apartment-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .apartment-table th,
+  .apartment-table td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .apartment-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .apartment-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .apartment-table img,
+  .apartment-table video {
+    display: block;
+    margin: auto;
+  }
+  
