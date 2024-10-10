@@ -58,6 +58,7 @@ const ApartmentList = () => {
               <th>Videos</th>
               <th>Pros</th>
               <th>Cons</th>
+              <th>URL</th> {/* Moved the URL column to the last position */}
             </tr>
           </thead>
           <tbody>
@@ -108,6 +109,16 @@ const ApartmentList = () => {
                       <li key={conIndex}>{con}</li>
                     ))}
                   </ul>
+                </td>
+                <td>
+                  {/* Display URL as a clickable link in the last column */}
+                  {apartment.URL ? (
+                    <a href={apartment.URL} target="_blank" rel="noopener noreferrer">
+                      View Property
+                    </a>
+                  ) : (
+                    'No URL'
+                  )}
                 </td>
               </tr>
             ))}
