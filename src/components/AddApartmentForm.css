@@ -1,0 +1,44 @@
+.add-apartment-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .add-apartment-form h2 {
+    text-align: center;
+  }
+  
+  .add-apartment-form label {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  .add-apartment-form input[type="text"],
+  .add-apartment-form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .add-apartment-form input[type="checkbox"] {
+    margin-top: 5px;
+  }
+  
+  .add-apartment-form button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+  }
+  
+  .add-apartment-form button:hover {
+    background-color: #45a049;
+  }
+  
