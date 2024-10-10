@@ -48,7 +48,7 @@ const ApartmentCard = () => {
   const nextImage = (index) => {
     setCurrentIndex((prevIndexes) => ({
       ...prevIndexes,
-      [index]: (prevIndexes[index] + 1) % apartments[index].Images.length
+      [index]: (prevIndexes[index] + 1) % apartments[index].Images.length,
     }));
   };
 
@@ -56,8 +56,7 @@ const ApartmentCard = () => {
   const prevImage = (index) => {
     setCurrentIndex((prevIndexes) => ({
       ...prevIndexes,
-      [index]:
-        prevIndexes[index] === 0 ? apartments[index].Images.length - 1 : prevIndexes[index] - 1
+      [index]: prevIndexes[index] === 0 ? apartments[index].Images.length - 1 : prevIndexes[index] - 1,
     }));
   };
 
@@ -65,34 +64,28 @@ const ApartmentCard = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="apartment-list">
-      <h1>Apartment Listings</h1>
+    <div className="apartment-card-container">
       {apartments.length === 0 ? (
         <p>No apartments available.</p>
       ) : (
-        <div className="card-container"> {/* Container for card layout */}
+        <div className="apartment-card-grid">
           {apartments.map((apartment, index) => (
             <div className="apartment-card" key={index}>
-              <div className="card-image-container">
-                <button
-                  className="arrow-button arrow-left"
-                  onClick={() => prevImage(index)}
-                >
+              <div className="image-container">
+                <button className="arrow-button arrow-left" onClick={() => prevImage(index)}>
                   &#8249;
                 </button>
+                {/* Display current image */}
                 <img
                   src={apartment.Images[currentIndex[index]]}
                   alt={`Apartment Image ${currentIndex[index] + 1}`}
                   className="apartment-image"
                 />
-                <button
-                  className="arrow-button arrow-right"
-                  onClick={() => nextImage(index)}
-                >
+                <button className="arrow-button arrow-right" onClick={() => nextImage(index)}>
                   &#8250;
                 </button>
               </div>
-              <div className="card-content">
+              <div className="apartment-details">
                 <h2>{apartment.Name}</h2>
                 <p><strong>Price:</strong> {apartment.Price}</p>
                 <p><strong>Bedrooms:</strong> {apartment.Bedrooms}</p>
@@ -117,7 +110,7 @@ const ApartmentCard = () => {
                   </div>
                 </div>
                 {apartment.URL && (
-                  <a href={apartment.URL} target="_blank" rel="noopener noreferrer">
+                  <a href={apartment.URL} target="_blank" rel="noopener noreferrer" className="property-link">
                     View Property
                   </a>
                 )}
