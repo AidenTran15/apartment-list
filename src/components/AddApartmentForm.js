@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './AddApartmentForm.css';
 
-
 const AddApartmentForm = () => {
   const [form, setForm] = useState({
     ApartmentID: '',
@@ -31,22 +30,59 @@ const AddApartmentForm = () => {
 
   // Function to handle array fields like Images, Videos, Pros, Cons
   const handleArrayChange = (e, type) => {
-    const items = e.target.value.split(',').map((item) => item.trim());
+    let items = e.target.value.split(',').map((item) => item.trim());
+    
+    // If handling 'Images', validate and format the URLs
+    if (type === 'Images') {
+      items = formatImageUrls(items);
+    }
+
     setForm((prevForm) => ({
       ...prevForm,
       [type]: items,
     }));
   };
 
+  // Helper function to format image URLs by combining fragments into complete URLs
+  const formatImageUrls = (imageSegments) => {
+    const completeUrls = [];
+    let currentUrl = '';
+
+    imageSegments.forEach((segment) => {
+      // If the segment starts with 'https', it's a new URL
+      if (segment.startsWith('https://')) {
+        // Push the current URL to the array if it's not empty
+        if (currentUrl) {
+          completeUrls.push(currentUrl);
+        }
+        // Start a new URL
+        currentUrl = segment;
+      } else {
+        // Otherwise, append the segment to the existing URL
+        currentUrl += `,${segment}`;
+      }
+    });
+
+    // Push the last URL to the array if it's not empty
+    if (currentUrl) {
+      completeUrls.push(currentUrl);
+    }
+
+    return completeUrls;
+  };
+
   // Function to handle form submission and send data to the API
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Clean up and filter image URLs before submission
+      const cleanedImages = form.Images.filter(url => url.includes('https://'));
+      
       // Prepare the request payload
       const payload = {
         ApartmentID: form.ApartmentID,
         Name: form.Name,
-        Images: form.Images,
+        Images: cleanedImages, // Use cleaned image URLs
         Videos: form.Videos,
         Price: form.Price,
         Bedrooms: parseInt(form.Bedrooms) || 0,
