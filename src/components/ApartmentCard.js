@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './ApartmentCard.css'; // Import the CSS file for styling
+import './ApartmentCard.css';
 
 const ApartmentCard = () => {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState({}); // Track current image index for each apartment
+  const [currentIndex, setCurrentIndex] = useState({});
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -20,12 +20,11 @@ const ApartmentCard = () => {
 
         let apartmentsData;
         if (data && typeof data.body === 'string') {
-          apartmentsData = JSON.parse(data.body); // Parse the body string
+          apartmentsData = JSON.parse(data.body);
         }
 
         if (Array.isArray(apartmentsData)) {
           setApartments(apartmentsData);
-          // Initialize current index tracking for each apartment
           const initialIndexes = {};
           apartmentsData.forEach((_, index) => {
             initialIndexes[index] = 0;
@@ -44,7 +43,6 @@ const ApartmentCard = () => {
     fetchApartments();
   }, []);
 
-  // Function to handle next image click for each apartment
   const nextImage = (index) => {
     setCurrentIndex((prevIndexes) => ({
       ...prevIndexes,
@@ -52,7 +50,6 @@ const ApartmentCard = () => {
     }));
   };
 
-  // Function to handle previous image click for each apartment
   const prevImage = (index) => {
     setCurrentIndex((prevIndexes) => ({
       ...prevIndexes,
@@ -72,16 +69,15 @@ const ApartmentCard = () => {
           {apartments.map((apartment, index) => (
             <div className="apartment-card" key={index}>
               <div className="image-container">
-                <button className="arrow-button arrow-left" onClick={() => prevImage(index)}>
+                <button className="arrow-button arrow-left" onClick={() => prevImage(index)} aria-label="Previous Image">
                   &#8249;
                 </button>
-                {/* Display current image */}
                 <img
                   src={apartment.Images[currentIndex[index]]}
                   alt={`Apartment Image ${currentIndex[index] + 1}`}
                   className="apartment-image"
                 />
-                <button className="arrow-button arrow-right" onClick={() => nextImage(index)}>
+                <button className="arrow-button arrow-right" onClick={() => nextImage(index)} aria-label="Next Image">
                   &#8250;
                 </button>
               </div>

@@ -1,58 +1,169 @@
-/* Style the table to keep columns at a consistent width */
-.apartment-table th,
-.apartment-table td {
-  padding: 8px;
-  text-align: center;
+/* Apply a background to the entire page */
+body {
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Style the image container to display images in a grid or flex layout */
+/* Container for the apartment card list */
+.apartment-card-container {
+  padding: 40px 60px;
+}
+
+/* Grid layout for the apartment cards */
+.apartment-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+  gap: 30px;
+}
+
+/* Individual apartment card styles */
+.apartment-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensure child elements don't overflow the card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.apartment-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Image container with navigation arrows */
 .image-container {
-  display: flex; /* Or use display: grid; */
-  flex-wrap: wrap; /* Wrap images if there are too many */
-  gap: 10px; /* Spacing between images */
-  justify-content: center;
-}
-
-/* Style individual images */
-.apartment-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover; /* Maintain aspect ratio and fit */
-}
-
-/* Style for video container */
-.video-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-.carousel-container {
   position: relative;
-  display: flex;
-  align-items: center;
+  height: 250px; /* Adjusted height for larger images */
 }
 
 .apartment-image {
-  max-width: 300px;
-  max-height: 200px;
-  border: 1px solid #ccc;
-  margin: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the container */
 }
 
-.carousel-button {
+/* Arrow button styles */
+.arrow-button {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #333;
   border: none;
   padding: 10px;
   cursor: pointer;
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
-.left-button {
-  left: 0;
+.arrow-button:hover {
+  opacity: 1;
 }
 
-.right-button {
-  right: 0;
+.arrow-left {
+  left: 10px;
+}
+
+.arrow-right {
+  right: 10px;
+}
+
+/* Details section of each card */
+.apartment-details {
+  padding: 20px;
+}
+
+.apartment-details h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.apartment-details p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.apartment-details strong {
+  color: #333;
+}
+
+/* Styling for pros and cons lists */
+.pros-cons {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.pros-cons > div {
+  width: 48%;
+}
+
+.pros-cons ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 5px 0;
+}
+
+.pros-cons ul li {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Link for viewing property */
+.property-link {
+  display: block;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.property-link:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1024px) {
+  .apartment-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .apartment-card-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .image-container {
+    height: 200px;
+  }
+
+  .apartment-details h2 {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .pros-cons {
+    flex-direction: column;
+  }
+
+  .pros-cons > div {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .image-container {
+    height: 180px;
+  }
 }
