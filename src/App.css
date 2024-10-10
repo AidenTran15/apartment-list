@@ -1,0 +1,30 @@
+.App {
+  padding: 20px;
+  text-align: center;
+}
+
+.apartment-card, .apartment-form {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+  width: 300px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.apartment-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 8px;
+}
