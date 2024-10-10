@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import './AddApartmentForm.css';
 
 const AddApartmentForm = () => {
   const [form, setForm] = useState({
     ApartmentID: '',
     Name: '',
-    Images: [], // Multiple image URLs as an array
-    Videos: [], // Multiple video URLs as an array
+    Images: [],
+    Videos: [],
     Price: '',
     Bedrooms: '',
     Bathrooms: '',
     Furnished: false,
     Pros: [],
     Cons: [],
-    URL: '', // Add URL field to the form state
+    URL: '',
   });
 
-  // Initialize navigation hook to redirect after successful submission
   const navigate = useNavigate();
 
-  // Function to handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({
@@ -29,42 +27,34 @@ const AddApartmentForm = () => {
     }));
   };
 
-  // Function to handle array fields like Images, Videos, Pros, Cons
-  const handleArrayChange = (e, type) => {
-    let items = e.target.value.split(',').map((item) => item.trim());
+// Function to handle array fields like Images, Videos, Pros, Cons
 
-    // If handling 'Images', validate and format the URLs
-    if (type === 'Images') {
-      items = formatImageUrls(items);
-    }
+const handleArrayChange = (e, type) => {
+  // Directly split the input by commas without trimming
+  const items = e.target.value.split(',');
 
-    setForm((prevForm) => ({
-      ...prevForm,
-      [type]: items,
-    }));
-  };
+  setForm((prevForm) => ({
+    ...prevForm,
+    [type]: items,
+  }));
+};
 
-  // Helper function to format image URLs by combining fragments into complete URLs
+
   const formatImageUrls = (imageSegments) => {
     const completeUrls = [];
     let currentUrl = '';
 
     imageSegments.forEach((segment) => {
-      // If the segment starts with 'https', it's a new URL
       if (segment.startsWith('https://')) {
-        // Push the current URL to the array if it's not empty
         if (currentUrl) {
           completeUrls.push(currentUrl);
         }
-        // Start a new URL
         currentUrl = segment;
       } else {
-        // Otherwise, append the segment to the existing URL
         currentUrl += `,${segment}`;
       }
     });
 
-    // Push the last URL to the array if it's not empty
     if (currentUrl) {
       completeUrls.push(currentUrl);
     }
@@ -72,18 +62,15 @@ const AddApartmentForm = () => {
     return completeUrls;
   };
 
-  // Function to handle form submission and send data to the API
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Clean up and filter image URLs before submission
       const cleanedImages = form.Images.filter((url) => url.includes('https://'));
 
-      // Prepare the request payload
       const payload = {
         ApartmentID: form.ApartmentID,
         Name: form.Name,
-        Images: cleanedImages, // Use cleaned image URLs
+        Images: cleanedImages,
         Videos: form.Videos,
         Price: form.Price,
         Bedrooms: parseInt(form.Bedrooms) || 0,
@@ -91,21 +78,20 @@ const AddApartmentForm = () => {
         Furnished: form.Furnished,
         Pros: form.Pros,
         Cons: form.Cons,
-        URL: form.URL, // Include URL in the payload
+        URL: form.URL,
       };
 
-      // Send POST request to the API
       const response = await fetch('https://vsw6lprnif.execute-api.ap-southeast-2.amazonaws.com/prod/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ body: JSON.stringify(payload) }), // Send data in the body as a string
+        body: JSON.stringify({ body: JSON.stringify(payload) }),
       });
 
       if (response.ok) {
         alert('Apartment added successfully!');
-        navigate('/'); // Redirect to the home page after successful submission
+        navigate('/');
       } else {
         alert('Failed to add apartment.');
       }
@@ -127,25 +113,27 @@ const AddApartmentForm = () => {
           Name:
           <input type="text" name="Name" value={form.Name} onChange={handleChange} required />
         </label>
+        <label className="section-title">Media Information</label>
         <label>
           Image URLs (comma separated):
-          <input type="text" value={form.Images.join(', ')} onChange={(e) => handleArrayChange(e, 'Images')} />
+          <input type="text" value={form.Images.join(', ')} onChange={(e) => handleArrayChange(e, 'Images')} placeholder="https://image1, https://image2" />
         </label>
         <label>
           Video URLs (comma separated):
-          <input type="text" value={form.Videos.join(', ')} onChange={(e) => handleArrayChange(e, 'Videos')} />
+          <input type="text" value={form.Videos.join(', ')} onChange={(e) => handleArrayChange(e, 'Videos')} placeholder="https://video1, https://video2" />
         </label>
+        <label className="section-title">Property Details</label>
         <label>
           Price:
-          <input type="text" name="Price" value={form.Price} onChange={handleChange} />
+          <input type="text" name="Price" value={form.Price} onChange={handleChange} placeholder="$1200/month" />
         </label>
         <label>
           Bedrooms:
-          <input type="number" name="Bedrooms" value={form.Bedrooms} onChange={handleChange} />
+          <input type="number" name="Bedrooms" value={form.Bedrooms} onChange={handleChange} placeholder="2" />
         </label>
         <label>
           Bathrooms:
-          <input type="number" name="Bathrooms" value={form.Bathrooms} onChange={handleChange} />
+          <input type="number" name="Bathrooms" value={form.Bathrooms} onChange={handleChange} placeholder="1" />
         </label>
         <label>
           Furnished:
@@ -156,13 +144,14 @@ const AddApartmentForm = () => {
             onChange={() => setForm((prevForm) => ({ ...prevForm, Furnished: !prevForm.Furnished }))}
           />
         </label>
+        <label className="section-title">Pros and Cons</label>
         <label>
           Pros (comma separated):
-          <input type="text" value={form.Pros.join(', ')} onChange={(e) => handleArrayChange(e, 'Pros')} />
+          <input type="text" value={form.Pros.join(', ')} onChange={(e) => handleArrayChange(e, 'Pros')} placeholder="Spacious, Near park" />
         </label>
         <label>
           Cons (comma separated):
-          <input type="text" value={form.Cons.join(', ')} onChange={(e) => handleArrayChange(e, 'Cons')} />
+          <input type="text" value={form.Cons.join(', ')} onChange={(e) => handleArrayChange(e, 'Cons')} placeholder="Noisy, Expensive" />
         </label>
         <label>
           URL:
