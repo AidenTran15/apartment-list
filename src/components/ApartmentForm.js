@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 const ApartmentForm = ({ apartment, onSave }) => {
   const [form, setForm] = useState(apartment || {
     name: '',
-    images: [], // Changed from a single image to an array of image URLs
-    videos: [], // Added videos array
-    price: '',
-    conveniences: '',
+    images: [], // Multiple image URLs as an array
+    videos: [], // Multiple video URLs as an array
+    price: '', // Price as a string input
     bedrooms: '',
     bathrooms: '',
     furnished: false,
@@ -55,11 +54,7 @@ const ApartmentForm = ({ apartment, onSave }) => {
       </label>
       <label>
         Price:
-        <input type="number" name="price" value={form.price} onChange={handleChange} />
-      </label>
-      <label>
-        Conveniences:
-        <input type="text" name="conveniences" value={form.conveniences} onChange={handleChange} />
+        <input type="text" name="price" value={form.price} onChange={handleChange} />
       </label>
       <label>
         Bedrooms:
