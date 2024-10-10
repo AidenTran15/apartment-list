@@ -27,3 +27,32 @@
   gap: 10px;
   justify-content: center;
 }
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.apartment-image {
+  max-width: 300px;
+  max-height: 200px;
+  border: 1px solid #ccc;
+  margin: 10px;
+}
+
+.carousel-button {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.left-button {
+  left: 0;
+}
+
+.right-button {
+  right: 0;
+}

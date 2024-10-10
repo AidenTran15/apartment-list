@@ -5,6 +5,7 @@ const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState({}); // Store index of current image for each apartment
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -24,6 +25,12 @@ const ApartmentList = () => {
 
         if (Array.isArray(apartmentsData)) {
           setApartments(apartmentsData);
+          // Initialize currentImageIndex state for each apartment
+          const initialImageIndexes = {};
+          apartmentsData.forEach((_, index) => {
+            initialImageIndexes[index] = 0;
+          });
+          setCurrentImageIndex(initialImageIndexes);
         } else {
           setError('Invalid data format received from the server');
         }
@@ -36,6 +43,22 @@ const ApartmentList = () => {
 
     fetchApartments();
   }, []);
+
+  // Function to handle next image
+  const handleNextImage = (index) => {
+    setCurrentImageIndex((prev) => ({
+      ...prev,
+      [index]: (prev[index] + 1) % apartments[index].Images.length,
+    }));
+  };
+
+  // Function to handle previous image
+  const handlePreviousImage = (index) => {
+    setCurrentImageIndex((prev) => ({
+      ...prev,
+      [index]: (prev[index] - 1 + apartments[index].Images.length) % apartments[index].Images.length,
+    }));
+  };
 
   if (loading) return <p>Loading apartments...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -59,7 +82,7 @@ const ApartmentList = () => {
               <th>Videos</th>
               <th>Pros</th>
               <th>Cons</th>
-              <th>URL</th> {/* Moved the URL column to the last position */}
+              <th>URL</th>
             </tr>
           </thead>
           <tbody>
@@ -71,21 +94,26 @@ const ApartmentList = () => {
                 <td>{apartment.Bedrooms}</td>
                 <td>{apartment.Bathrooms}</td>
                 <td>{apartment.Furnished ? 'Yes' : 'No'}</td>
-                <td className="image-cell"> {/* Added class for styling */}
-                  {apartment.Images && apartment.Images.length > 0
-                    ? (
-                      <div className="image-container"> {/* Container for images */}
-                        {apartment.Images.map((image, imgIndex) => (
-                          <img
-                            key={imgIndex}
-                            src={image}
-                            alt={`Apartment Image ${imgIndex + 1}`}
-                            className="apartment-image"
-                          />
-                        ))}
-                      </div>
-                    )
-                    : 'No Images'}
+                <td className="image-cell">
+                  {apartment.Images && apartment.Images.length > 0 ? (
+                    <div className="carousel-container">
+                      {/* Display the current image */}
+                      <img
+                        src={apartment.Images[currentImageIndex[index]]}
+                        alt={`Apartment Image ${currentImageIndex[index] + 1}`}
+                        className="apartment-image"
+                      />
+                      {/* Navigation buttons */}
+                      <button onClick={() => handlePreviousImage(index)} className="carousel-button left-button">
+                        &#8249;
+                      </button>
+                      <button onClick={() => handleNextImage(index)} className="carousel-button right-button">
+                        &#8250;
+                      </button>
+                    </div>
+                  ) : (
+                    'No Images'
+                  )}
                 </td>
                 <td>
                   {apartment.Videos && apartment.Videos.length > 0
