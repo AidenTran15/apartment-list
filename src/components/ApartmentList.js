@@ -75,13 +75,13 @@ const ApartmentList = () => {
               <th>Apartment ID</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Bedrooms</th>
-              <th>Bathrooms</th>
+              <th>Bed</th>
+              <th>Bath</th>
               <th>Furnished</th>
               <th>Images</th>
-              <th>Videos</th>
               <th>Pros</th>
               <th>Cons</th>
+              <th>Bond</th>
               <th>URL</th>
             </tr>
           </thead>
@@ -116,20 +116,6 @@ const ApartmentList = () => {
                   )}
                 </td>
                 <td>
-                  {apartment.Videos && apartment.Videos.length > 0
-                    ? apartment.Videos.map((video, vidIndex) => (
-                        <video
-                          key={vidIndex}
-                          src={video}
-                          controls
-                          style={{ width: '100px', height: '100px', margin: '5px' }}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      ))
-                    : 'No Videos'}
-                </td>
-                <td>
                   <ul>
                     {apartment.Pros.map((pro, proIndex) => (
                       <li key={proIndex}>{pro}</li>
@@ -143,6 +129,7 @@ const ApartmentList = () => {
                     ))}
                   </ul>
                 </td>
+                <td>{apartment.Bond}</td>
                 <td>
                   {apartment.URL ? (
                     <a href={apartment.URL} target="_blank" rel="noopener noreferrer">
