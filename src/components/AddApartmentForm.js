@@ -14,6 +14,7 @@ const AddApartmentForm = () => {
     Furnished: false,
     Pros: [],
     Cons: [],
+    URL: '', // Add URL field to the form state
   });
 
   // Initialize navigation hook to redirect after successful submission
@@ -31,7 +32,7 @@ const AddApartmentForm = () => {
   // Function to handle array fields like Images, Videos, Pros, Cons
   const handleArrayChange = (e, type) => {
     let items = e.target.value.split(',').map((item) => item.trim());
-    
+
     // If handling 'Images', validate and format the URLs
     if (type === 'Images') {
       items = formatImageUrls(items);
@@ -76,8 +77,8 @@ const AddApartmentForm = () => {
     e.preventDefault();
     try {
       // Clean up and filter image URLs before submission
-      const cleanedImages = form.Images.filter(url => url.includes('https://'));
-      
+      const cleanedImages = form.Images.filter((url) => url.includes('https://'));
+
       // Prepare the request payload
       const payload = {
         ApartmentID: form.ApartmentID,
@@ -90,6 +91,7 @@ const AddApartmentForm = () => {
         Furnished: form.Furnished,
         Pros: form.Pros,
         Cons: form.Cons,
+        URL: form.URL, // Include URL in the payload
       };
 
       // Send POST request to the API
@@ -161,6 +163,10 @@ const AddApartmentForm = () => {
         <label>
           Cons (comma separated):
           <input type="text" value={form.Cons.join(', ')} onChange={(e) => handleArrayChange(e, 'Cons')} />
+        </label>
+        <label>
+          URL:
+          <input type="text" name="URL" value={form.URL} onChange={handleChange} placeholder="Enter property URL" />
         </label>
         <button type="submit">Add Apartment</button>
       </form>
