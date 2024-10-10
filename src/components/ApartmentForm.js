@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 const ApartmentForm = ({ apartment, onSave }) => {
   const [form, setForm] = useState(apartment || {
     name: '',
-    image: '',
+    images: [], // Changed from a single image to an array of image URLs
+    videos: [], // Added videos array
     price: '',
     conveniences: '',
     bedrooms: '',
@@ -37,8 +38,20 @@ const ApartmentForm = ({ apartment, onSave }) => {
         <input type="text" name="name" value={form.name} onChange={handleChange} />
       </label>
       <label>
-        Image URL:
-        <input type="text" name="image" value={form.image} onChange={handleChange} />
+        Image URLs (comma separated):
+        <input
+          type="text"
+          value={form.images.join(', ')}
+          onChange={(e) => handleArrayChange(e, 'images')}
+        />
+      </label>
+      <label>
+        Video URLs (comma separated):
+        <input
+          type="text"
+          value={form.videos.join(', ')}
+          onChange={(e) => handleArrayChange(e, 'videos')}
+        />
       </label>
       <label>
         Price:
@@ -58,15 +71,28 @@ const ApartmentForm = ({ apartment, onSave }) => {
       </label>
       <label>
         Furnished:
-        <input type="checkbox" name="furnished" checked={form.furnished} onChange={() => setForm((prevForm) => ({ ...prevForm, furnished: !prevForm.furnished }))} />
+        <input
+          type="checkbox"
+          name="furnished"
+          checked={form.furnished}
+          onChange={() => setForm((prevForm) => ({ ...prevForm, furnished: !prevForm.furnished }))}
+        />
       </label>
       <label>
         Pros (comma separated):
-        <input type="text" value={form.pros.join(', ')} onChange={(e) => handleArrayChange(e, 'pros')} />
+        <input
+          type="text"
+          value={form.pros.join(', ')}
+          onChange={(e) => handleArrayChange(e, 'pros')}
+        />
       </label>
       <label>
         Cons (comma separated):
-        <input type="text" value={form.cons.join(', ')} onChange={(e) => handleArrayChange(e, 'cons')} />
+        <input
+          type="text"
+          value={form.cons.join(', ')}
+          onChange={(e) => handleArrayChange(e, 'cons')}
+        />
       </label>
       <button onClick={() => onSave(form)}>Save</button>
     </div>
