@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './ApartmentList.css'; // Import the CSS file for styling
 
 const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);
@@ -70,16 +71,20 @@ const ApartmentList = () => {
                 <td>{apartment.Bedrooms}</td>
                 <td>{apartment.Bathrooms}</td>
                 <td>{apartment.Furnished ? 'Yes' : 'No'}</td>
-                <td>
+                <td className="image-cell"> {/* Added class for styling */}
                   {apartment.Images && apartment.Images.length > 0
-                    ? apartment.Images.map((image, imgIndex) => (
-                        <img
-                          key={imgIndex}
-                          src={image}
-                          alt={`Apartment Image ${imgIndex + 1}`}
-                          style={{ width: '100px', height: '100px', margin: '5px' }}
-                        />
-                      ))
+                    ? (
+                      <div className="image-container"> {/* Container for images */}
+                        {apartment.Images.map((image, imgIndex) => (
+                          <img
+                            key={imgIndex}
+                            src={image}
+                            alt={`Apartment Image ${imgIndex + 1}`}
+                            className="apartment-image"
+                          />
+                        ))}
+                      </div>
+                    )
                     : 'No Images'}
                 </td>
                 <td>
@@ -111,7 +116,6 @@ const ApartmentList = () => {
                   </ul>
                 </td>
                 <td>
-                  {/* Display URL as a clickable link in the last column */}
                   {apartment.URL ? (
                     <a href={apartment.URL} target="_blank" rel="noopener noreferrer">
                       View Property

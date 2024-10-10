@@ -1,29 +1,29 @@
-.apartment-list {
-    padding: 20px;
-  }
-  
-  .apartment-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .apartment-table th,
-  .apartment-table td {
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .apartment-table th {
-    background-color: #f4f4f4;
-  }
-  
-  .apartment-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .apartment-table img,
-  .apartment-table video {
-    display: block;
-    margin: auto;
-  }
-  
+/* Style the table to keep columns at a consistent width */
+.apartment-table th,
+.apartment-table td {
+  padding: 8px;
+  text-align: center;
+}
+
+/* Style the image container to display images in a grid or flex layout */
+.image-container {
+  display: flex; /* Or use display: grid; */
+  flex-wrap: wrap; /* Wrap images if there are too many */
+  gap: 10px; /* Spacing between images */
+  justify-content: center;
+}
+
+/* Style individual images */
+.apartment-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Maintain aspect ratio and fit */
+}
+
+/* Style for video container */
+.video-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
