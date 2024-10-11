@@ -482,27 +482,33 @@ a:hover {
 }
 
 
-/* Container to position header and filter together */
+/* Header and filter container styling */
 .header-filter-container {
   display: flex;
   flex-direction: column;
-  position: relative;
+  /* Keep heading and filters in a column */
   align-items: flex-end;
-  /* Align content to the right */
   margin-bottom: 20px;
 }
 
-/* Position the filter dropdown below the heading */
-.sorting-container {
+/* Container for filter dropdowns */
+.filter-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
-  /* Position below the header */
+  /* Align to the right */
+  gap: 15px;
+  /* Add spacing between the dropdowns */
+}
+
+/* Style for each filter container */
+.sorting-container {
+  display: flex;
+  align-items: center;
 }
 
 /* Style the dropdown */
 .sorting-dropdown {
-  width: 200px;
+  width: 180px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -525,12 +531,5 @@ a:hover {
   font-size: 18px;
   margin-right: 10px;
   color: #0073e6;
-  margin-bottom: 5px;
-}
-
-/* Center the heading */
-.header-filter-container h1 {
-  margin: 0;
-  text-align: center;
-  width: 100%;
+  margin-bottom: 0;
 }
