@@ -210,8 +210,8 @@ const ApartmentList = () => {
             <label htmlFor="sort">Sort by Bathrooms:</label>
             <select id="sort" value={sortOption} onChange={handleSortChange} className="sorting-dropdown">
               <option value="0">Default</option>
-              <option value="1">Low to High</option>
-              <option value="2">High to Low</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
             </select>
           </div>
 
