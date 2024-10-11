@@ -1,11 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import './ApartmentList.css'; // Import the CSS file for styling
 
+// Modal component to display apartment details
+const ApartmentModal = ({ apartment, isOpen, onClose }) => {
+  if (!isOpen || !apartment) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>X</button>
+        <img src={apartment.Images[0]} alt="Apartment" className="modal-image" />
+        <h2>{apartment.Name}</h2>
+        <p><strong>Price:</strong> {apartment.Price}</p>
+        <p><strong>Bedrooms:</strong> {apartment.Bedrooms}</p>
+        <p><strong>Bathrooms:</strong> {apartment.Bathrooms}</p>
+        <p><strong>Furnished:</strong> {apartment.Furnished ? 'Yes' : 'No'}</p>
+        <div>
+          <strong>Pros:</strong>
+          <ul>
+            {apartment.Pros.map((pro, index) => <li key={index}>{pro}</li>)}
+          </ul>
+        </div>
+        <div>
+          <strong>Cons:</strong>
+          <ul>
+            {apartment.Cons.map((con, index) => <li key={index}>{con}</li>)}
+          </ul>
+        </div>
+        <a href={apartment.URL} target="_blank" rel="noopener noreferrer">View Property</a>
+      </div>
+    </div>
+  );
+};
+
 const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState({}); // Store index of current image for each apartment
+  const [currentImageIndex, setCurrentImageIndex] = useState({});
+  const [selectedApartment, setSelectedApartment] = useState(null); // State to manage selected apartment
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -25,7 +59,6 @@ const ApartmentList = () => {
 
         if (Array.isArray(apartmentsData)) {
           setApartments(apartmentsData);
-          // Initialize currentImageIndex state for each apartment
           const initialImageIndexes = {};
           apartmentsData.forEach((_, index) => {
             initialImageIndexes[index] = 0;
@@ -43,6 +76,18 @@ const ApartmentList = () => {
 
     fetchApartments();
   }, []);
+
+  // Function to handle modal open
+  const handleImageClick = (apartment) => {
+    setSelectedApartment(apartment);
+    setIsModalOpen(true);
+  };
+
+  // Function to handle modal close
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedApartment(null);
+  };
 
   // Function to handle next image
   const handleNextImage = (index) => {
@@ -100,6 +145,7 @@ const ApartmentList = () => {
                         src={apartment.Images[currentImageIndex[index]]}
                         alt={`Apartment Image ${currentImageIndex[index] + 1}`}
                         className="apartment-image"
+                        onClick={() => handleImageClick(apartment)}
                       />
                       {/* Navigation buttons */}
                       <button onClick={() => handlePreviousImage(index)} className="carousel-button left-button">
@@ -141,6 +187,8 @@ const ApartmentList = () => {
           </tbody>
         </table>
       )}
+      {/* Apartment Modal */}
+      <ApartmentModal apartment={selectedApartment} isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };
