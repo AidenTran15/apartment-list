@@ -108,6 +108,7 @@ body {
 .pros-cons ul {
   padding: 0;
   list-style-type: none;
+  /* Remove bullet points */
   margin: 0;
 }
 
@@ -160,9 +161,7 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
   max-height: 80vh;
-  /* Limit height for better scrolling */
   overflow-y: auto;
-  /* Enable scrolling when content overflows */
 }
 
 /* Modal Header */
@@ -236,7 +235,8 @@ body {
 
 .pros-cons ul {
   padding: 0;
-  list-style: none;
+  list-style-type: none;
+  /* Remove bullet points */
   margin: 0;
 }
 
@@ -346,6 +346,40 @@ body {
   padding: 40px;
   max-width: 1200px;
   margin: auto;
+}
+
+/* Additional CSS to remove bullet points in the modal */
+.modal-content ul {
+  list-style-type: none;
+  /* Remove the default bullet points */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margin */
+}
+
+.modal-content ul li {
+  list-style-type: none;
+  /* Remove bullet points specifically for list items */
+  padding-left: 0;
+  /* Remove left padding */
+}
+
+
+/* Additional CSS to remove bullet points */
+.apartment-table ul {
+  list-style-type: none;
+  /* Remove the default bullet points */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margin */
+}
+
+/* Remove bullet points specifically for list items */
+.apartment-table ul li {
+  list-style-type: none;
+  /* Ensure no bullet points for list items */
 }
 
 .apartment-table {
