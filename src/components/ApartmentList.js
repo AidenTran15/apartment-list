@@ -39,7 +39,6 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
         <div className="modal-header">
           <h2 className="modal-title">{apartment.Name}</h2>
           <p className="modal-subtitle">{apartment.ApartmentID || 'Unknown ID'}</p>
-
         </div>
 
         {/* Modal Image Carousel */}
@@ -114,9 +113,9 @@ const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [selectedApartment, setSelectedApartment] = useState(null); // State to manage selected apartment
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [sortOption, setSortOption] = useState(0); // State for managing sorting option
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -136,11 +135,6 @@ const ApartmentList = () => {
 
         if (Array.isArray(apartmentsData)) {
           setApartments(apartmentsData);
-          const initialImageIndexes = {};
-          apartmentsData.forEach((_, index) => {
-            initialImageIndexes[index] = 0;
-          });
-          setCurrentImageIndex(initialImageIndexes);
         } else {
           setError('Invalid data format received from the server');
         }
@@ -166,13 +160,39 @@ const ApartmentList = () => {
     setSelectedApartment(null);
   };
 
+  // Function to handle sort change
+  const handleSortChange = (e) => {
+    setSortOption(Number(e.target.value)); // Convert value to number
+  };
+
+  // Sort apartments based on selected sort option
+  const sortedApartments = [...apartments].sort((a, b) => {
+    if (sortOption === 1) {
+      return a.Bathrooms - b.Bathrooms; // Sort Bathrooms (Low to High)
+    } else if (sortOption === 2) {
+      return b.Bathrooms - a.Bathrooms; // Sort Bathrooms (High to Low)
+    }
+    return 0; // Default sorting
+  });
+
   if (loading) return <p>Loading apartments...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="apartment-list">
       <h1>Apartment Listings</h1>
-      {apartments.length === 0 ? (
+
+      {/* Sorting Dropdown */}
+      <div className="sorting-container">
+        <label htmlFor="sort">Sort by:</label>
+        <select id="sort" value={sortOption} onChange={handleSortChange} className="sorting-dropdown">
+          <option value="0">Default</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+
+      {sortedApartments.length === 0 ? (
         <p>No apartments available.</p>
       ) : (
         <table className="apartment-table">
@@ -191,7 +211,7 @@ const ApartmentList = () => {
             </tr>
           </thead>
           <tbody>
-            {apartments.map((apartment, index) => (
+            {sortedApartments.map((apartment, index) => (
               <tr key={index}>
                 <td>{apartment.ApartmentID}</td>
                 <td>{apartment.Name}</td>
@@ -203,8 +223,8 @@ const ApartmentList = () => {
                   {apartment.Images && apartment.Images.length > 0 ? (
                     <div className="carousel-container">
                       <img
-                        src={apartment.Images[currentImageIndex[index]]}
-                        alt={`Apartment Image ${currentImageIndex[index] + 1}`}
+                        src={apartment.Images[0]}
+                        alt={`Apartment Image`}
                         className="apartment-image"
                         onClick={() => handleImageClick(apartment)}
                       />
@@ -242,7 +262,9 @@ const ApartmentList = () => {
         </table>
       )}
       {/* Apartment Modal */}
-      <ApartmentModal apartment={selectedApartment} isOpen={isModalOpen} onClose={handleCloseModal} />
+      {selectedApartment && (
+        <ApartmentModal apartment={selectedApartment} isOpen={isModalOpen} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };
