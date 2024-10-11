@@ -3,13 +3,52 @@ import './ApartmentList.css'; // Import the CSS file for styling
 
 // Modal component to display apartment details
 const ApartmentModal = ({ apartment, isOpen, onClose }) => {
+  const [currentModalImageIndex, setCurrentModalImageIndex] = useState(0);
+
+  // Reset the image index when the modal is opened with a new apartment
+  useEffect(() => {
+    if (apartment) {
+      setCurrentModalImageIndex(0);
+    }
+  }, [apartment]);
+
+  // Handle next image in the modal
+  const handleNextModalImage = () => {
+    if (apartment && apartment.Images) {
+      setCurrentModalImageIndex((prevIndex) => (prevIndex + 1) % apartment.Images.length);
+    }
+  };
+
+  // Handle previous image in the modal
+  const handlePreviousModalImage = () => {
+    if (apartment && apartment.Images) {
+      setCurrentModalImageIndex((prevIndex) =>
+        (prevIndex - 1 + apartment.Images.length) % apartment.Images.length
+      );
+    }
+  };
+
   if (!isOpen || !apartment) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>X</button>
-        <img src={apartment.Images[0]} alt="Apartment" className="modal-image" />
+        {/* Modal Image Carousel */}
+        <div className="modal-carousel">
+          <button className="carousel-button left-button" onClick={handlePreviousModalImage}>
+            &#8249;
+          </button>
+          <img
+            src={apartment.Images[currentModalImageIndex]}
+            alt={`Apartment Image ${currentModalImageIndex + 1}`}
+            className="modal-image"
+          />
+          <button className="carousel-button right-button" onClick={handleNextModalImage}>
+            &#8250;
+          </button>
+        </div>
+        {/* Apartment Details */}
         <h2>{apartment.Name}</h2>
         <p><strong>Price:</strong> {apartment.Price}</p>
         <p><strong>Bedrooms:</strong> {apartment.Bedrooms}</p>
