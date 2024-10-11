@@ -38,7 +38,8 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
         {/* Modal Header */}
         <div className="modal-header">
           <h2 className="modal-title">{apartment.Name}</h2>
-          <p className="modal-subtitle">{apartment.Location || 'Unknown Location'}</p>
+          <p className="modal-subtitle">{apartment.ApartmentID || 'Unknown ID'}</p>
+
         </div>
 
         {/* Modal Image Carousel */}
