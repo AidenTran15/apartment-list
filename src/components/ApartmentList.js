@@ -34,6 +34,13 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>X</button>
+
+        {/* Modal Header */}
+        <div className="modal-header">
+          <h2 className="modal-title">{apartment.Name}</h2>
+          <p className="modal-subtitle">{apartment.Location || 'Unknown Location'}</p>
+        </div>
+
         {/* Modal Image Carousel */}
         <div className="modal-carousel">
           <button className="carousel-button left-button" onClick={handlePreviousModalImage}>
@@ -48,25 +55,58 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
             &#8250;
           </button>
         </div>
-        {/* Apartment Details */}
-        <h2>{apartment.Name}</h2>
-        <p><strong>Price:</strong> {apartment.Price}</p>
-        <p><strong>Bedrooms:</strong> {apartment.Bedrooms}</p>
-        <p><strong>Bathrooms:</strong> {apartment.Bathrooms}</p>
-        <p><strong>Furnished:</strong> {apartment.Furnished ? 'Yes' : 'No'}</p>
-        <div>
-          <strong>Pros:</strong>
-          <ul>
-            {apartment.Pros.map((pro, index) => <li key={index}>{pro}</li>)}
-          </ul>
+
+        {/* Price and Details Section */}
+        <div className="modal-info-container">
+          <div className="modal-info-card">
+            <h3 className="modal-section-title">Price</h3>
+            <p className="modal-price">{apartment.Price}</p>
+          </div>
+          <div className="modal-info-card">
+            <h3 className="modal-section-title">Details</h3>
+            <div className="modal-details-grid">
+              <div className="modal-details-item">
+                <i className="fas fa-bed modal-details-icon"></i>
+                <span>{apartment.Bedrooms} Bedrooms</span>
+              </div>
+              <div className="modal-details-item">
+                <i className="fas fa-bath modal-details-icon"></i>
+                <span>{apartment.Bathrooms} Bathrooms</span>
+              </div>
+              <div className="modal-details-item">
+                <i className="fas fa-couch modal-details-icon"></i>
+                <span>{apartment.Furnished ? 'Furnished' : 'Not Furnished'}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <strong>Cons:</strong>
-          <ul>
-            {apartment.Cons.map((con, index) => <li key={index}>{con}</li>)}
-          </ul>
+
+        {/* Pros and Cons Section */}
+        <div className="pros-cons-container">
+          <div className="pros-cons pros">
+            <h3 className="modal-section-title">Pros</h3>
+            <ul>
+              {apartment.Pros.map((pro, index) => (
+                <li key={index}>{pro}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="pros-cons cons">
+            <h3 className="modal-section-title">Cons</h3>
+            <ul>
+              {apartment.Cons.map((con, index) => (
+                <li className="con" key={index}>{con}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <a href={apartment.URL} target="_blank" rel="noopener noreferrer">View Property</a>
+
+        {/* View Property Link */}
+        {apartment.URL && (
+          <a href={apartment.URL} target="_blank" rel="noopener noreferrer" className="property-link">
+            View Property
+          </a>
+        )}
       </div>
     </div>
   );
