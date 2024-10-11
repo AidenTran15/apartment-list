@@ -10,15 +10,15 @@ function App() {
     <Router>
       <div className="App">
         {/* Navigation Links */}
-        <nav>
+        {/* <nav>
           <Link to="/">Home</Link> | <Link to="/add-apartment">Add New Apartment</Link> | <Link to="/apartment-card">Apartment Card View</Link>
-        </nav>
+        </nav> */}
 
         {/* Define Routes */}
         <Routes>
           <Route path="/" element={<ApartmentList />} />
           <Route path="/add-apartment" element={<AddApartmentForm onAddApartment={handleAddApartment} />} />
-          <Route path="/apartment-card" element={<ApartmentCard />} /> {/* New route for ApartmentCard */}
+          <Route path="/apartment-card" element={<ApartmentCard />} /> 
         </Routes>
       </div>
     </Router>
