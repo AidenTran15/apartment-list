@@ -5,21 +5,18 @@ import './ApartmentList.css'; // Import the CSS file for styling
 const ApartmentModal = ({ apartment, isOpen, onClose }) => {
   const [currentModalImageIndex, setCurrentModalImageIndex] = useState(0);
 
-  // Reset the image index when the modal is opened with a new apartment
   useEffect(() => {
     if (apartment) {
       setCurrentModalImageIndex(0);
     }
   }, [apartment]);
 
-  // Handle next image in the modal
   const handleNextModalImage = () => {
     if (apartment && apartment.Images) {
       setCurrentModalImageIndex((prevIndex) => (prevIndex + 1) % apartment.Images.length);
     }
   };
 
-  // Handle previous image in the modal
   const handlePreviousModalImage = () => {
     if (apartment && apartment.Images) {
       setCurrentModalImageIndex((prevIndex) =>
@@ -115,7 +112,8 @@ const ApartmentList = () => {
   const [error, setError] = useState(null);
   const [selectedApartment, setSelectedApartment] = useState(null); // State to manage selected apartment
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-  const [sortOption, setSortOption] = useState(0); // State for managing sorting option
+  const [sortOption, setSortOption] = useState(0); // State for managing sorting option for bathrooms
+  const [priceSortOption, setPriceSortOption] = useState(0); // State for managing sorting option for price
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -148,7 +146,23 @@ const ApartmentList = () => {
     fetchApartments();
   }, []);
 
-  // Function to handle modal open
+  // Function to extract price value from string (assumes price is always formatted with a $ sign and numbers)
+  const extractPrice = (priceString) => {
+    const match = priceString.match(/\$([0-9,]+)/);
+    return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
+  };
+
+  // Function to handle bathroom sort change
+  const handleSortChange = (e) => {
+    setSortOption(Number(e.target.value)); // Convert value to number
+  };
+
+  // Function to handle price sort change
+  const handlePriceSortChange = (e) => {
+    setPriceSortOption(Number(e.target.value)); // Convert value to number
+  };
+
+  // Function to handle image click (open modal)
   const handleImageClick = (apartment) => {
     setSelectedApartment(apartment);
     setIsModalOpen(true);
@@ -160,17 +174,19 @@ const ApartmentList = () => {
     setSelectedApartment(null);
   };
 
-  // Function to handle sort change
-  const handleSortChange = (e) => {
-    setSortOption(Number(e.target.value)); // Convert value to number
-  };
-
   // Sort apartments based on selected sort option
   const sortedApartments = [...apartments].sort((a, b) => {
+    // Sort by bathrooms if option is selected
     if (sortOption === 1) {
-      return a.Bathrooms - b.Bathrooms; // Sort Bathrooms (Low to High)
+      return a.Bathrooms - b.Bathrooms;
     } else if (sortOption === 2) {
-      return b.Bathrooms - a.Bathrooms; // Sort Bathrooms (High to Low)
+      return b.Bathrooms - a.Bathrooms;
+    }
+    // Sort by price if option is selected
+    if (priceSortOption === 1) {
+      return extractPrice(a.Price) - extractPrice(b.Price);
+    } else if (priceSortOption === 2) {
+      return extractPrice(b.Price) - extractPrice(a.Price);
     }
     return 0; // Default sorting
   });
@@ -180,17 +196,27 @@ const ApartmentList = () => {
 
   return (
     <div className="apartment-list">
-      {/* Container to position header and filter together */}
-      <div className="header-filter-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h1 style={{ margin: '0' }}>Apartment Listings</h1>
+      {/* Container to position header and filters together */}
+      <div className="header-filter-container">
+        <h1>Apartment Listings</h1>
 
-        {/* Sorting Dropdown */}
+        {/* Sorting Dropdown for Bathrooms */}
         <div className="sorting-container">
           <label htmlFor="sort">Sort by Bathrooms:</label>
           <select id="sort" value={sortOption} onChange={handleSortChange} className="sorting-dropdown">
             <option value="0">Default</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="1">1 </option>
+            <option value="2">2 </option>
+          </select>
+        </div>
+
+        {/* Sorting Dropdown for Price */}
+        <div className="sorting-container" style={{ marginLeft: '20px' }}>
+          <label htmlFor="priceSort">Sort by Price:</label>
+          <select id="priceSort" value={priceSortOption} onChange={handlePriceSortChange} className="sorting-dropdown">
+            <option value="0">Default</option>
+            <option value="1">Low to High</option>
+            <option value="2">High to Low</option>
           </select>
         </div>
       </div>
