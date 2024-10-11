@@ -66,15 +66,12 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
             <h3 className="modal-section-title">Details</h3>
             <div className="modal-details-grid">
               <div className="modal-details-item">
-                <i className="fas fa-bed modal-details-icon"></i>
                 <span>{apartment.Bedrooms} Bedrooms</span>
               </div>
               <div className="modal-details-item">
-                <i className="fas fa-bath modal-details-icon"></i>
                 <span>{apartment.Bathrooms} Bathrooms</span>
               </div>
               <div className="modal-details-item">
-                <i className="fas fa-couch modal-details-icon"></i>
                 <span>{apartment.Furnished ? 'Furnished' : 'Not Furnished'}</span>
               </div>
             </div>
@@ -168,22 +165,6 @@ const ApartmentList = () => {
     setSelectedApartment(null);
   };
 
-  // Function to handle next image
-  const handleNextImage = (index) => {
-    setCurrentImageIndex((prev) => ({
-      ...prev,
-      [index]: (prev[index] + 1) % apartments[index].Images.length,
-    }));
-  };
-
-  // Function to handle previous image
-  const handlePreviousImage = (index) => {
-    setCurrentImageIndex((prev) => ({
-      ...prev,
-      [index]: (prev[index] - 1 + apartments[index].Images.length) % apartments[index].Images.length,
-    }));
-  };
-
   if (loading) return <p>Loading apartments...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -226,13 +207,6 @@ const ApartmentList = () => {
                         className="apartment-image"
                         onClick={() => handleImageClick(apartment)}
                       />
-                      {/* Navigation buttons */}
-                      <button onClick={() => handlePreviousImage(index)} className="carousel-button left-button">
-                        &#8249;
-                      </button>
-                      <button onClick={() => handleNextImage(index)} className="carousel-button right-button">
-                        &#8250;
-                      </button>
                     </div>
                   ) : (
                     'No Images'
