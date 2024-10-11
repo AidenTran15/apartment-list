@@ -30,7 +30,9 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>X</button>
+        <button className="modal-close" onClick={onClose}>
+          X
+        </button>
 
         {/* Modal Header */}
         <div className="modal-header">
@@ -89,7 +91,9 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
             <h3 className="modal-section-title">Cons</h3>
             <ul>
               {apartment.Cons.map((con, index) => (
-                <li className="con" key={index}>{con}</li>
+                <li className="con" key={index}>
+                  {con}
+                </li>
               ))}
             </ul>
           </div>
@@ -97,7 +101,12 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
 
         {/* View Property Link */}
         {apartment.URL && (
-          <a href={apartment.URL} target="_blank" rel="noopener noreferrer" className="property-link">
+          <a
+            href={apartment.URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="property-link"
+          >
             View Property
           </a>
         )}
@@ -112,9 +121,9 @@ const ApartmentList = () => {
   const [error, setError] = useState(null);
   const [selectedApartment, setSelectedApartment] = useState(null); // State to manage selected apartment
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-  const [sortOption, setSortOption] = useState(0); // State for managing sorting option for bathrooms
   const [priceSortOption, setPriceSortOption] = useState(0); // State for managing sorting option for price
   const [nameFilter, setNameFilter] = useState('All'); // State for managing filter by name
+  const [bathroomFilter, setBathroomFilter] = useState('All'); // New state for bathroom filter
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -152,16 +161,16 @@ const ApartmentList = () => {
     return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
   };
 
-  const handleSortChange = (e) => {
-    setSortOption(Number(e.target.value)); // Convert value to number
-  };
-
   const handlePriceSortChange = (e) => {
     setPriceSortOption(Number(e.target.value)); // Convert value to number
   };
 
   const handleNameFilterChange = (e) => {
     setNameFilter(e.target.value); // Set the selected name filter
+  };
+
+  const handleBathroomFilterChange = (e) => {
+    setBathroomFilter(e.target.value); // Set the selected bathroom filter
   };
 
   const handleImageClick = (apartment) => {
@@ -177,22 +186,23 @@ const ApartmentList = () => {
   // Get unique apartment names for the dropdown options
   const uniqueApartmentNames = ['All', ...new Set(apartments.map((apartment) => apartment.Name))];
 
-  // Sort apartments based on selected options and filter by name
-  const sortedApartments = [...apartments]
-    .filter((apartment) => nameFilter === 'All' || apartment.Name === nameFilter) // Filter by name
-    .sort((a, b) => {
-      if (sortOption === 1) {
-        return a.Bathrooms - b.Bathrooms;
-      } else if (sortOption === 2) {
-        return b.Bathrooms - a.Bathrooms;
-      }
-      if (priceSortOption === 1) {
-        return extractPrice(a.Price) - extractPrice(b.Price);
-      } else if (priceSortOption === 2) {
-        return extractPrice(b.Price) - extractPrice(a.Price);
-      }
-      return 0; // Default sorting
-    });
+  // Filter apartments based on selected filters
+  const filteredApartments = apartments
+    .filter((apartment) => nameFilter === 'All' || apartment.Name === nameFilter)
+    .filter(
+      (apartment) =>
+        bathroomFilter === 'All' || apartment.Bathrooms === Number(bathroomFilter)
+    );
+
+  // Sort apartments based on selected price sort option
+  const sortedApartments = filteredApartments.sort((a, b) => {
+    if (priceSortOption === 1) {
+      return extractPrice(a.Price) - extractPrice(b.Price);
+    } else if (priceSortOption === 2) {
+      return extractPrice(b.Price) - extractPrice(a.Price);
+    }
+    return 0; // Default sorting
+  });
 
   if (loading) return <p>Loading apartments...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -205,20 +215,31 @@ const ApartmentList = () => {
 
         {/* Container to keep filters in the same row */}
         <div className="filter-row">
-          {/* Sorting Dropdown for Bathrooms */}
-          <div className="sorting-container">
-            <label htmlFor="sort">Sort by Bathrooms:</label>
-            <select id="sort" value={sortOption} onChange={handleSortChange} className="sorting-dropdown">
-              <option value="0">Default</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
+          {/* Filtering Dropdown for Bathrooms */}
+          <div className="filter-container">
+            <label htmlFor="bathroomFilter">Filter by Bathrooms:</label>
+            <select
+              id="bathroomFilter"
+              value={bathroomFilter}
+              onChange={handleBathroomFilterChange}
+              className="filter-dropdown"
+            >
+              <option value="All">All</option>
+              <option value="1">1 Bathroom</option>
+              <option value="2">2 Bathrooms</option>
+              {/* Add more options if needed */}
             </select>
           </div>
 
           {/* Sorting Dropdown for Price */}
           <div className="sorting-container">
             <label htmlFor="priceSort">Sort by Price:</label>
-            <select id="priceSort" value={priceSortOption} onChange={handlePriceSortChange} className="sorting-dropdown">
+            <select
+              id="priceSort"
+              value={priceSortOption}
+              onChange={handlePriceSortChange}
+              className="sorting-dropdown"
+            >
               <option value="0">Default</option>
               <option value="1">Low to High</option>
               <option value="2">High to Low</option>
@@ -226,9 +247,14 @@ const ApartmentList = () => {
           </div>
 
           {/* Filtering Dropdown for Apartment Name */}
-          <div className="sorting-container">
+          <div className="filter-container">
             <label htmlFor="nameFilter">Filter by Name:</label>
-            <select id="nameFilter" value={nameFilter} onChange={handleNameFilterChange} className="sorting-dropdown">
+            <select
+              id="nameFilter"
+              value={nameFilter}
+              onChange={handleNameFilterChange}
+              className="filter-dropdown"
+            >
               {uniqueApartmentNames.map((name, index) => (
                 <option key={index} value={name}>
                   {name}
@@ -310,7 +336,11 @@ const ApartmentList = () => {
       )}
       {/* Apartment Modal */}
       {selectedApartment && (
-        <ApartmentModal apartment={selectedApartment} isOpen={isModalOpen} onClose={handleCloseModal} />
+        <ApartmentModal
+          apartment={selectedApartment}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
       )}
     </div>
   );

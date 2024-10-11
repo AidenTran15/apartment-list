@@ -575,3 +575,26 @@ a:hover {
   width: 20px;
   /* Decrease the width as needed */
 }
+
+/* Styles for the new filter container and dropdown */
+.filter-container {
+  display: flex;
+  align-items: center;
+}
+
+.filter-dropdown {
+  width: 140px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  margin-left: 5px;
+}
+
+.filter-container label {
+  font-size: 14px;
+  color: #0073e6;
+}
