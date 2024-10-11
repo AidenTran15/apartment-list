@@ -133,13 +133,6 @@ body {
   transform: scale(1.05);
 }
 
-
-
-
-
-
-
-
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
@@ -148,7 +141,6 @@ body {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
-  /* Softer overlay */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,19 +151,18 @@ body {
 /* Modal Content */
 .modal-content {
   background: #ffffff;
-  /* White background */
   padding: 30px;
-  /* Slightly reduced padding */
   border-radius: 15px;
-  /* Rounded corners for a softer look */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  /* Softer shadow */
   max-width: 600px;
-  /* Narrower for compact design */
   width: 100%;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  max-height: 80vh;
+  /* Limit height for better scrolling */
+  overflow-y: auto;
+  /* Enable scrolling when content overflows */
 }
 
 /* Modal Header */
@@ -182,17 +173,14 @@ body {
 
 .modal-header h2 {
   font-size: 24px;
-  /* Smaller title font */
   font-weight: 600;
   color: #333;
-  /* Darker text color */
 }
 
 /* Price Section */
 .modal-price {
   text-align: center;
   background: #f0f4f8;
-  /* Light background for emphasis */
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -200,9 +188,7 @@ body {
 
 .modal-price p {
   font-size: 18px;
-  /* Smaller text */
   color: #333;
-  /* Consistent text color */
   font-weight: 500;
 }
 
@@ -213,7 +199,6 @@ body {
   align-items: center;
   margin-bottom: 20px;
   background: #f9f9f9;
-  /* Light background for separation */
   padding: 15px;
   border-radius: 10px;
 }
@@ -237,12 +222,10 @@ body {
 
 .pros-cons {
   background: #f9f9f9;
-  /* Light background */
   padding: 15px;
   border-radius: 10px;
   flex: 1;
   margin: 0 10px;
-  /* Even spacing */
 }
 
 .pros-cons h3 {
@@ -263,7 +246,6 @@ body {
   color: #444;
   margin-bottom: 8px;
   border-left: 4px solid #007bff;
-  /* Accent border */
   background: #f1f8ff;
 }
 
@@ -291,13 +273,6 @@ body {
 .modal-close:hover {
   background: #ff3636;
 }
-
-
-
-
-
-
-
 
 /* Modal Carousel */
 .modal-carousel {
@@ -348,6 +323,24 @@ body {
   right: 10px;
 }
 
+/* Scroll bar styling */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* Existing Table and Other Styles */
 .apartment-list {
   padding: 40px;
@@ -385,60 +378,6 @@ body {
   padding: 15px;
 }
 
-.apartment-table th:nth-child(1),
-.apartment-table td:nth-child(1) {
-  width: 10%;
-}
-
-.apartment-table th:nth-child(2),
-.apartment-table td:nth-child(2) {
-  width: 15%;
-}
-
-.apartment-table th:nth-child(3),
-.apartment-table td:nth-child(3) {
-  width: 15%;
-}
-
-.apartment-table th:nth-child(4),
-.apartment-table td:nth-child(4) {
-  width: 8%;
-}
-
-.apartment-table th:nth-child(5),
-.apartment-table td:nth-child(5) {
-  width: 8%;
-}
-
-.apartment-table th:nth-child(6),
-.apartment-table td:nth-child(6) {
-  width: 8%;
-}
-
-.apartment-table th:nth-child(7),
-.apartment-table td:nth-child(7) {
-  width: 15%;
-}
-
-.apartment-table th:nth-child(8),
-.apartment-table td:nth-child(8) {
-  width: 12%;
-}
-
-.apartment-table th:nth-child(9),
-.apartment-table td:nth-child(9) {
-  width: 12%;
-}
-
-.apartment-table th:nth-child(10),
-.apartment-table td:nth-child(10) {
-  width: 12%;
-}
-
-.apartment-table tr {
-  transition: background-color 0.3s ease;
-}
-
 .apartment-table tr:hover {
   background-color: #f1f1f1;
 }
@@ -448,15 +387,6 @@ body {
   border-bottom: 1px solid #e0e0e0;
   font-size: 16px;
   color: #333333;
-}
-
-.apartment-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.image-cell {
-  text-align: center;
-  position: relative;
 }
 
 .apartment-image {
@@ -511,26 +441,8 @@ a:hover {
     font-size: 14px;
   }
 
-  .apartment-table th:nth-child(1),
-  .apartment-table td:nth-child(1),
-  .apartment-table th:nth-child(2),
-  .apartment-table td:nth-child(2),
-  .apartment-table th:nth-child(3),
-  .apartment-table td:nth-child(3),
-  .apartment-table th:nth-child(4),
-  .apartment-table td:nth-child(4),
-  .apartment-table th:nth-child(5),
-  .apartment-table td:nth-child(5),
-  .apartment-table th:nth-child(6),
-  .apartment-table td:nth-child(6),
-  .apartment-table th:nth-child(7),
-  .apartment-table td:nth-child(7),
-  .apartment-table th:nth-child(8),
-  .apartment-table td:nth-child(8),
-  .apartment-table th:nth-child(9),
-  .apartment-table td:nth-child(9),
-  .apartment-table th:nth-child(10),
-  .apartment-table td:nth-child(10) {
+  .apartment-table th,
+  .apartment-table td {
     width: auto;
   }
 }
