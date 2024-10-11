@@ -480,3 +480,57 @@ a:hover {
     width: auto;
   }
 }
+
+
+/* Container to position header and filter together */
+.header-filter-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-end;
+  /* Align content to the right */
+  margin-bottom: 20px;
+}
+
+/* Position the filter dropdown below the heading */
+.sorting-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  /* Position below the header */
+}
+
+/* Style the dropdown */
+.sorting-dropdown {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for dropdown */
+.sorting-dropdown:hover {
+  border-color: #0073e6;
+  box-shadow: 0 6px 12px rgba(0, 115, 230, 0.2);
+}
+
+/* Style the label */
+.sorting-container label {
+  font-size: 18px;
+  margin-right: 10px;
+  color: #0073e6;
+  margin-bottom: 5px;
+}
+
+/* Center the heading */
+.header-filter-container h1 {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}

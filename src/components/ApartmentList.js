@@ -180,16 +180,19 @@ const ApartmentList = () => {
 
   return (
     <div className="apartment-list">
-      <h1>Apartment Listings</h1>
+      {/* Container to position header and filter together */}
+      <div className="header-filter-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h1 style={{ margin: '0' }}>Apartment Listings</h1>
 
-      {/* Sorting Dropdown */}
-      <div className="sorting-container">
-        <label htmlFor="sort">Sort by:</label>
-        <select id="sort" value={sortOption} onChange={handleSortChange} className="sorting-dropdown">
-          <option value="0">Default</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
+        {/* Sorting Dropdown */}
+        <div className="sorting-container">
+          <label htmlFor="sort">Sort by Bathrooms:</label>
+          <select id="sort" value={sortOption} onChange={handleSortChange} className="sorting-dropdown">
+            <option value="0">Default</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
       </div>
 
       {sortedApartments.length === 0 ? (
