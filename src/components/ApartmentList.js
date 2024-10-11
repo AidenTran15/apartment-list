@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ApartmentList.css'; // Import the CSS file for styling
 
+// Modal component to display apartment details
 const ApartmentModal = ({ apartment, isOpen, onClose }) => {
   const [currentModalImageIndex, setCurrentModalImageIndex] = useState(0);
 
@@ -113,6 +114,7 @@ const ApartmentList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const [sortOption, setSortOption] = useState(0); // State for managing sorting option for bathrooms
   const [priceSortOption, setPriceSortOption] = useState(0); // State for managing sorting option for price
+  const [nameFilter, setNameFilter] = useState('All'); // State for managing filter by name
 
   const API_URL = 'https://tm54z87qrk.execute-api.ap-southeast-2.amazonaws.com/prod/get';
 
@@ -158,6 +160,10 @@ const ApartmentList = () => {
     setPriceSortOption(Number(e.target.value)); // Convert value to number
   };
 
+  const handleNameFilterChange = (e) => {
+    setNameFilter(e.target.value); // Set the selected name filter
+  };
+
   const handleImageClick = (apartment) => {
     setSelectedApartment(apartment);
     setIsModalOpen(true);
@@ -168,19 +174,25 @@ const ApartmentList = () => {
     setSelectedApartment(null);
   };
 
-  const sortedApartments = [...apartments].sort((a, b) => {
-    if (sortOption === 1) {
-      return a.Bathrooms - b.Bathrooms;
-    } else if (sortOption === 2) {
-      return b.Bathrooms - a.Bathrooms;
-    }
-    if (priceSortOption === 1) {
-      return extractPrice(a.Price) - extractPrice(b.Price);
-    } else if (priceSortOption === 2) {
-      return extractPrice(b.Price) - extractPrice(a.Price);
-    }
-    return 0; // Default sorting
-  });
+  // Get unique apartment names for the dropdown options
+  const uniqueApartmentNames = ['All', ...new Set(apartments.map((apartment) => apartment.Name))];
+
+  // Sort apartments based on selected options and filter by name
+  const sortedApartments = [...apartments]
+    .filter((apartment) => nameFilter === 'All' || apartment.Name === nameFilter) // Filter by name
+    .sort((a, b) => {
+      if (sortOption === 1) {
+        return a.Bathrooms - b.Bathrooms;
+      } else if (sortOption === 2) {
+        return b.Bathrooms - a.Bathrooms;
+      }
+      if (priceSortOption === 1) {
+        return extractPrice(a.Price) - extractPrice(b.Price);
+      } else if (priceSortOption === 2) {
+        return extractPrice(b.Price) - extractPrice(a.Price);
+      }
+      return 0; // Default sorting
+    });
 
   if (loading) return <p>Loading apartments...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -210,6 +222,18 @@ const ApartmentList = () => {
               <option value="0">Default</option>
               <option value="1">Low to High</option>
               <option value="2">High to Low</option>
+            </select>
+          </div>
+
+          {/* Filtering Dropdown for Apartment Name */}
+          <div className="sorting-container">
+            <label htmlFor="nameFilter">Filter by Name:</label>
+            <select id="nameFilter" value={nameFilter} onChange={handleNameFilterChange} className="sorting-dropdown">
+              {uniqueApartmentNames.map((name, index) => (
+                <option key={index} value={name}>
+                  {name}
+                </option>
+              ))}
             </select>
           </div>
         </div>
