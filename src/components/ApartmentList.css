@@ -540,3 +540,38 @@ a:hover {
   /* Reduced spacing */
   color: #0073e6;
 }
+
+.apartment-table th:nth-child(3),
+/* Targets the Price header */
+.apartment-table td:nth-child(3) {
+  /* Targets the Price cells */
+  width: 250px;
+  /* Increase the width as needed */
+}
+
+/* Adjust the width of the Bedrooms column */
+.apartment-table th:nth-child(4),
+/* Targets the Bedrooms header */
+.apartment-table td:nth-child(4) {
+  /* Targets the Bedrooms cells */
+  width: 20px;
+  /* Decrease the width as needed */
+}
+
+/* Adjust the width of the Bathrooms column */
+.apartment-table th:nth-child(5),
+/* Targets the Bathrooms header */
+.apartment-table td:nth-child(5) {
+  /* Targets the Bathrooms cells */
+  width: 20px;
+  /* Decrease the width as needed */
+}
+
+/* Adjust the width of the Furnished column */
+.apartment-table th:nth-child(6),
+/* Targets the Furnished header */
+.apartment-table td:nth-child(6) {
+  /* Targets the Furnished cells */
+  width: 20px;
+  /* Decrease the width as needed */
+}
