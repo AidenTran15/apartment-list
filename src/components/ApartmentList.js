@@ -88,7 +88,7 @@ const ApartmentModal = ({ apartment, isOpen, onClose }) => {
             </ul>
           </div>
           <div className="pros-cons cons">
-            <h3 className="modal-section-title">Cons</h3>
+            <h3 className="modal-section-title">Bond</h3>
             <ul>
               {apartment.Cons.map((con, index) => (
                 <li className="con" key={index}>
@@ -271,7 +271,7 @@ const ApartmentList = () => {
         <table className="apartment-table">
           <thead>
             <tr>
-              <th>Apartment ID</th>
+              <th>Location</th>
               <th>Name</th>
               <th>Price</th>
               <th>Bed</th>
@@ -279,7 +279,7 @@ const ApartmentList = () => {
               <th>Furnished</th>
               <th>Images</th>
               <th>Pros</th>
-              <th>Cons</th>
+              <th>Bond</th>
               <th>URL</th>
             </tr>
           </thead>
