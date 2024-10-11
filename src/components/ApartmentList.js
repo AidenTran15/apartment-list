@@ -69,17 +69,16 @@ const ApartmentList = () => {
       {apartments.length === 0 ? (
         <p>No apartments available.</p>
       ) : (
-        <table className="apartment-table" border="1" cellPadding="10">
+        <table className="apartment-table">
           <thead>
             <tr>
               <th>Apartment ID</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Bedrooms</th>
-              <th>Bathrooms</th>
+              <th>Bed</th>
+              <th>Bath</th>
               <th>Furnished</th>
               <th>Images</th>
-              <th>Videos</th>
               <th>Pros</th>
               <th>Cons</th>
               <th>URL</th>
@@ -97,7 +96,6 @@ const ApartmentList = () => {
                 <td className="image-cell">
                   {apartment.Images && apartment.Images.length > 0 ? (
                     <div className="carousel-container">
-                      {/* Display the current image */}
                       <img
                         src={apartment.Images[currentImageIndex[index]]}
                         alt={`Apartment Image ${currentImageIndex[index] + 1}`}
@@ -114,20 +112,6 @@ const ApartmentList = () => {
                   ) : (
                     'No Images'
                   )}
-                </td>
-                <td>
-                  {apartment.Videos && apartment.Videos.length > 0
-                    ? apartment.Videos.map((video, vidIndex) => (
-                        <video
-                          key={vidIndex}
-                          src={video}
-                          controls
-                          style={{ width: '100px', height: '100px', margin: '5px' }}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      ))
-                    : 'No Videos'}
                 </td>
                 <td>
                   <ul>

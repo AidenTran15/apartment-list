@@ -6,164 +6,219 @@ body {
   padding: 0;
 }
 
-/* Container for the apartment card list */
-.apartment-card-container {
-  padding: 40px 60px;
+/* Container for the apartment table */
+.apartment-list {
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-/* Grid layout for the apartment cards */
-.apartment-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
-  gap: 30px;
-}
-
-/* Individual apartment card styles */
-.apartment-card {
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Ensure child elements don't overflow the card */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.apartment-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
-}
-
-/* Image container with navigation arrows */
-.image-container {
-  position: relative;
-  height: 250px; /* Adjusted height for larger images */
-}
-
-.apartment-image {
+/* Styles for the apartment table */
+.apartment-table {
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the image covers the container */
-}
-
-/* Arrow button styles */
-.arrow-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #333;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 1;
-  border-radius: 50%;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.arrow-button:hover {
-  opacity: 1;
-}
-
-.arrow-left {
-  left: 10px;
-}
-
-.arrow-right {
-  right: 10px;
-}
-
-/* Details section of each card */
-.apartment-details {
-  padding: 20px;
-}
-
-.apartment-details h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 24px;
-}
-
-.apartment-details p {
-  margin: 5px 0;
-  color: #555;
-}
-
-.apartment-details strong {
-  color: #333;
-}
-
-/* Styling for pros and cons lists */
-.pros-cons {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 0;
-}
-
-.pros-cons > div {
-  width: 48%;
-}
-
-.pros-cons ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin: 5px 0;
-}
-
-.pros-cons ul li {
-  margin-bottom: 5px;
-  color: #555;
-}
-
-/* Link for viewing property */
-.property-link {
-  display: block;
-  text-align: center;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  padding: 12px;
-  border-radius: 8px;
+  border-collapse: collapse;
   margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
+  /* Fixed table layout for better control of column widths */
+}
+
+/* Table header styling */
+.apartment-table th {
+  position: sticky;
+  top: 0;
+  background-color: #007bff;
+  color: #ffffff;
+  text-align: center;
+  /* Center-align header text */
+  padding: 15px;
   font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Ensure all table headers and cells are center-aligned */
+.apartment-table th,
+.apartment-table td {
+  text-align: center;
+  /* Center-align all table cells */
+  vertical-align: middle;
+  /* Center-align text vertically */
+  padding: 15px;
+  /* Padding for all cells */
+}
+
+/* Set specific column widths */
+.apartment-table th:nth-child(1),
+.apartment-table td:nth-child(1) {
+  width: 10%;
+}
+
+/* Apartment ID */
+.apartment-table th:nth-child(2),
+.apartment-table td:nth-child(2) {
+  width: 15%;
+}
+
+/* Name */
+.apartment-table th:nth-child(3),
+.apartment-table td:nth-child(3) {
+  width: 15%;
+}
+
+/* Price */
+.apartment-table th:nth-child(4),
+.apartment-table td:nth-child(4) {
+  width: 8%;
+}
+
+/* Bedrooms */
+.apartment-table th:nth-child(5),
+.apartment-table td:nth-child(5) {
+  width: 8%;
+}
+
+/* Bathrooms */
+.apartment-table th:nth-child(6),
+.apartment-table td:nth-child(6) {
+  width: 8%;
+}
+
+/* Furnished */
+.apartment-table th:nth-child(7),
+.apartment-table td:nth-child(7) {
+  width: 15%;
+}
+
+/* Images */
+.apartment-table th:nth-child(8),
+.apartment-table td:nth-child(8) {
+  width: 12%;
+}
+
+/* Pros */
+.apartment-table th:nth-child(9),
+.apartment-table td:nth-child(9) {
+  width: 12%;
+}
+
+/* Cons */
+.apartment-table th:nth-child(10),
+.apartment-table td:nth-child(10) {
+  width: 12%;
+}
+
+/* URL */
+
+/* Table row styling */
+.apartment-table tr {
   transition: background-color 0.3s ease;
 }
 
-.property-link:hover {
-  background-color: #0056b3;
+/* Hover effect for rows */
+.apartment-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Styling for table cells */
+.apartment-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 16px;
+  color: #333333;
+}
+
+/* Alternating row colors */
+.apartment-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Image cell styling */
+.image-cell {
+  text-align: center;
+  position: relative;
+}
+
+/* Apartment image */
+.apartment-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Carousel button styles */
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 16px;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.left-button {
+  left: 5px;
+}
+
+.right-button {
+  right: 5px;
+}
+
+/* Table link styling */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* Responsive adjustments */
-@media screen and (max-width: 1024px) {
-  .apartment-card-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .apartment-card-grid {
-    grid-template-columns: repeat(1, 1fr);
+
+  .apartment-table th,
+  .apartment-table td {
+    padding: 10px;
+    font-size: 14px;
+    /* Smaller text for smaller screens */
   }
 
-  .image-container {
-    height: 200px;
-  }
-
-  .apartment-details h2 {
-    font-size: 20px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .pros-cons {
-    flex-direction: column;
-  }
-
-  .pros-cons > div {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .image-container {
-    height: 180px;
+  .apartment-table th:nth-child(1),
+  .apartment-table td:nth-child(1),
+  .apartment-table th:nth-child(2),
+  .apartment-table td:nth-child(2),
+  .apartment-table th:nth-child(3),
+  .apartment-table td:nth-child(3),
+  .apartment-table th:nth-child(4),
+  .apartment-table td:nth-child(4),
+  .apartment-table th:nth-child(5),
+  .apartment-table td:nth-child(5),
+  .apartment-table th:nth-child(6),
+  .apartment-table td:nth-child(6),
+  .apartment-table th:nth-child(7),
+  .apartment-table td:nth-child(7),
+  .apartment-table th:nth-child(8),
+  .apartment-table td:nth-child(8),
+  .apartment-table th:nth-child(9),
+  .apartment-table td:nth-child(9),
+  .apartment-table th:nth-child(10),
+  .apartment-table td:nth-child(10) {
+    width: auto;
+    /* Allow auto width for better responsiveness */
   }
 }
