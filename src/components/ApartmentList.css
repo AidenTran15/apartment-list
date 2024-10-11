@@ -494,10 +494,11 @@ a:hover {
   display: flex;
   justify-content: center;
   /* Center items in the row */
-  gap: 15px;
+  gap: 55px;
   /* Add spacing between the dropdowns */
-  margin-top: 10px;
+  margin-top: 20px;
   /* Adjust to position it below the header */
+  margin-bottom: -20px;
 }
 
 /* Style for each filter container */
