@@ -23,7 +23,6 @@ body {
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   table-layout: fixed;
-  /* Fixed table layout for better control of column widths */
 }
 
 /* Table header styling */
@@ -33,22 +32,18 @@ body {
   background-color: #007bff;
   color: #ffffff;
   text-align: center;
-  /* Center-align header text */
   padding: 15px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Ensure all table headers and cells are center-aligned */
+/* Center-align all table headers and cells */
 .apartment-table th,
 .apartment-table td {
   text-align: center;
-  /* Center-align all table cells */
   vertical-align: middle;
-  /* Center-align text vertically */
   padding: 15px;
-  /* Padding for all cells */
 }
 
 /* Set specific column widths */
@@ -111,8 +106,6 @@ body {
   width: 12%;
 }
 
-/* URL */
-
 /* Table row styling */
 .apartment-table tr {
   transition: background-color 0.3s ease;
@@ -148,6 +141,8 @@ body {
   height: 100px;
   object-fit: cover;
   border-radius: 5px;
+  cursor: pointer;
+  /* Indicate that the image is clickable */
 }
 
 /* Carousel button styles */
@@ -195,7 +190,6 @@ a:hover {
   .apartment-table td {
     padding: 10px;
     font-size: 14px;
-    /* Smaller text for smaller screens */
   }
 
   .apartment-table th:nth-child(1),
@@ -219,7 +213,6 @@ a:hover {
   .apartment-table th:nth-child(10),
   .apartment-table td:nth-child(10) {
     width: auto;
-    /* Allow auto width for better responsiveness */
   }
 }
 
@@ -251,7 +244,6 @@ a:hover {
 .modal-image {
   width: 100%;
   height: auto;
-  margin-bottom: 20px;
 }
 
 /* Modal Close Button */
@@ -268,7 +260,43 @@ a:hover {
   cursor: pointer;
 }
 
-/* Modal Close Button Hover */
 .modal-close:hover {
   background: #ff3636;
+}
+
+/* Modal Carousel */
+.modal-carousel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Modal Carousel Button Styles */
+.modal-carousel .carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 16px;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.modal-carousel .carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-carousel .left-button {
+  left: 10px;
+}
+
+.modal-carousel .right-button {
+  right: 10px;
 }
