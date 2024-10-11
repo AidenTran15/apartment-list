@@ -201,7 +201,7 @@ const ApartmentList = () => {
     <div className="apartment-list">
       {/* Container to position header and filters together */}
       <div className="header-filter-container">
-        <h1>Apartment Listings</h1>
+        <h1>Apartment Listings for Kilầy & Ribu</h1>
 
         {/* Container to keep filters in the same row */}
         <div className="filter-row">
